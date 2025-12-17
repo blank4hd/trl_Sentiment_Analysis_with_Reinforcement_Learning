@@ -21,8 +21,7 @@ A production-ready sentiment analysis system using Direct Preference Optimizatio
 
 **CHANAKYA CHELAMKURI , VINEET JUJJAVARAPU**
 
-- Email: chanakya@terpmail.umd.edu , vineetj5@umd.edu
-- UID: 121305602 , 121322340
+- Email: chanakya@terpmail.umd.edu , vineetj5@terpmail.umd.edu
 
 ---
 
