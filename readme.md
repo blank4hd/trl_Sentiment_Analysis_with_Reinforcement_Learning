@@ -1,10 +1,36 @@
-# Airline Sentiment Analysis with Reinforcement Learning (TRL)
+# Airline Sentiment Analysis with TRL and Active Learning (Difficulty Level: 3)
 
-## ✈️ Project Overview
+A production-ready sentiment analysis system using Direct Preference Optimization (DPO) to align GPT-2 with human preferences. The system moves beyond static classification by implementing an **Active Learning loop**, allowing users to correct uncertain predictions and refine the model iteratively through a modern Streamlit interface.
+
+## Table of Contents
+
+1. [Authors](#authors)
+2. [Project Overview](#%EF%B8%8F-project-overview)
+3. [System Architecture](#%EF%B8%8F-system-architecture)
+4. [Experimental Results](#-experimental-results)
+5. [Design Decisions & Intent](#-design-decisions--intent)
+6. [Data Schema](#-data-schema)
+7. [Docker Setup](#-docker-setup)
+8. [Project Structure](#-project-structure)
+9. [Usage Guide](#-usage-guide)
+10. [Future Work](#-future-work)
+11. [Limitations](#%EF%B8%8F-limitations)
+12. [Acknowledgments](#-acknowledgments)
+
+## Authors
+
+**CHANAKYA CHELAMKURI , VINEET JUJJAVARAPU**
+
+- Email: chanakya@terpmail.umd.edu , vineetj5@umd.edu
+- UID: 121305602 , 121322340
+
+---
+
+## Project Overview
 
 This project implements a sentiment analysis system that adapts over time using **Reinforcement Learning (RL)** and **Active Learning**. Unlike traditional static classifiers, this model optimizes its accuracy based on feedback loops, moving from a standard supervised baseline to a preference-tuned model aligned with human judgment.
 
-## 🏗️ System Architecture
+## System Architecture
 
 The following diagram illustrates the multi-stage training pipeline, specifically highlighting the data splitting strategy and the active learning loop.
 
@@ -50,7 +76,7 @@ graph TD
 
 ---
 
-## 🎯 Design Decisions & Intent
+## Design Decisions & Intent
 
 ### 1\. Model Choice: Why GPT-2 over BERT?
 
@@ -75,7 +101,7 @@ To prevent data leakage and bias, we use a stratified splitting strategy:
 
 ---
 
-## 💾 Data Schema
+## Data Schema
 
 The project expects a dataset file named `Tweets.csv` with the following structure:
 
@@ -85,6 +111,18 @@ The project expects a dataset file named `Tweets.csv` with the following structu
 | `airline_sentiment` | String | Target label. Must be one of: `negative`, `neutral`, `positive`.       |
 
 ---
+
+## Clone the Repository & Navigate to the folder(if not already)
+
+```bash
+git clone https://github.com/blank4hd/RL_Airline_Sentiment_Analysis_with_trl.git
+```
+
+Folder Name: RL_Airline_Sentiment_Analysis_with_trl
+
+```bash
+cd "<replace_with_your_path>/RL_Airline_Sentiment_Analysis_with_trl"
+```
 
 ## 🐳 Docker Setup
 
@@ -114,7 +152,10 @@ docker-compose up
 - **Streamlit App**:
   1.  Keep the container running.
   2.  Open a new terminal.
-  3.  Run: `docker exec -it trl_airline_lab streamlit run trl_app.py`
+  3.  Run:
+  ```bash
+    docker exec -it trl_airline_lab streamlit run trl_app.py
+  ```
   4.  Visit `http://localhost:8501`
 
 ---
@@ -130,7 +171,7 @@ docker-compose up
 
 ---
 
-## 🚀 Usage Guide
+## Usage Guide
 
 ### 1\. Running the Benchmark (Notebook)
 
@@ -147,5 +188,28 @@ Launch the Streamlit app to test the feedback loop.
 - **Input**: Type a custom airline tweet.
 - **Feedback**: Correct the model's prediction if it is wrong.
 - **RL Update**: In a full production loop, this feedback is saved as a preference pair to retrain the DPO model.
+
+---
+
+## Future Work
+
+- **Model Scale**: Upgrade from GPT-2 (Small) to a larger model like **Llama-2-7b** or **Mistral-7b** to improve reasoning capabilities on complex tweets.
+- **Reward Modeling**: Implement a separate Reward Model (RM) to provide more granular signals during RL training, rather than relying solely on the reference model divergence.
+- **Multilingual Support**: Expand the dataset to include non-English tweets to test cross-lingual sentiment adaptation.
+
+---
+
+## ⚠️ Limitations
+
+- **Base Model Size**: The project uses GPT-2 (124M parameters) due to compute constraints. While efficient, it struggles with highly nuanced sarcasm compared to modern LLMs.
+- **Synthetic Feedback**: The current Active Learning loop simulates human feedback in the notebook demo. In a real-world deployment, this would require a persistent database backend rather than a CSV file.
+
+---
+
+## 🙏 Acknowledgments
+
+- **Hugging Face TRL Library**: For providing the PPO and DPO trainer abstractions.
+- **Kaggle**: For hosting the _Twitter US Airline Sentiment_ dataset.
+- **Streamlit**: For enabling the rapid development of the interactive feedback UI.
 
 <!-- end list -->
